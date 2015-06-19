@@ -3,10 +3,12 @@
 /.idea
 .env
 
-#composer
+# package manager
 /vendor
+/node_modules
 
 # assets
-/public/styles
+/public/css
 /public/images
 /public/scripts
+/public/build
