@@ -44,7 +44,7 @@
         GMaps.geolocate({
             success: function (position) {
                 var map = UI().map.map,
-                    lat = position.coords.latitude;
+                    lat = position.coords.latitude,
                     lng = position.coords.longitude;
 
                 map.setCenter(lat, lng);
