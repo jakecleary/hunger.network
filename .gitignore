@@ -1,0 +1,12 @@
+# misc
+.DS_Store
+/.idea
+.env
+
+#composer
+/vendor
+
+# assets
+/public/styles
+/public/images
+/public/scripts
