@@ -23,9 +23,16 @@
     padding: 1.5rem;
     color: #DDDDDD;
 
+    &__heading, p {
+        margin: 0 0 1rem;
+    }
+
     &__heading {
         font-size: 1.4rem;
-        margin: 0 0 1rem;
+
+        & + p {
+            margin-top: -1rem;
+        }
     }
 
     .form__row {
