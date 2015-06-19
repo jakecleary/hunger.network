@@ -29,3 +29,20 @@ $app->get('/maps/{id}', [
     'as'    => 'maps.show',
     'uses'  => 'MapController@show'
 ]);
+
+
+/*
+ * Pins
+ */
+$app->get('/pins/create', [
+    'as'    => 'pins.create',
+    'uses'  => 'PinController@create'
+]);
+$app->post('/pins', [
+    'as'   => 'pins.store',
+    'uses' => 'PinController@store'
+]);
+$app->get('/pins/{id}', [
+    'as'    => 'pins.show',
+    'uses'  => 'PinController@show'
+]);
