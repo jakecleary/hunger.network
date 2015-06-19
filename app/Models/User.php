@@ -12,4 +12,14 @@ final class User extends Model {
         'updated_at'
     ];
 
+    /**
+     * Grab the users maps
+     *
+     * @return Collection<Map>
+     */
+    public function maps()
+    {
+        return $this->hasMany('Map');
+    }
+
 }
