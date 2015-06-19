@@ -4,6 +4,11 @@ use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 
 use Facebook\FacebookRedirectLoginHelper;
+use Facebook\FacebookRequest;
+use Facebook\GraphUser;
+use Facebook\FacebookRequestException;
+
+use App\Models\User;
 
 /**
  * Represent interactions with a User
@@ -18,19 +23,50 @@ class UserController extends Controller {
      */
     public function login(Request $request)
     {
-        $code = $request->input('code');
-        if($code) {
-            // Need to save code
-            dd($code);
-            // $user = User::create('');
+        $helper = new FacebookRedirectLoginHelper(getenv('APP_URL').'/auth-callback');
+        $loginUrl = $helper->getLoginUrl() . 'publish_actions,email';
+        return view('user.login', compact('loginUrl'));
+    }
 
-            // Create session
-            // $request->session()->put('user', $user->id);
+    /**
+     * Handle GET to /auth-callback
+     *
+     * @param  Request $request
+     * @return HttpResponse
+     */
+    public function auth(Request $request)
+    {
+        $helper = new FacebookRedirectLoginHelper(getenv('APP_URL').'/auth-callback');
+
+        try {
+            $session = $helper->getSessionFromRedirect();
+        } catch(FacebookRequestException $ex) {
+            dd($ex);
+        } catch(\Exception $ex) {
+            dd($ex);
         }
 
-        $helper = new FacebookRedirectLoginHelper(getenv('APP_URL'));
-        $loginUrl = $helper->getLoginUrl() . 'publish_actions';
-        return view('user.login', compact('loginUrl'));
+        if ($session) {
+            $token = $session->getToken();
+
+            try {
+                $user_profile = (new FacebookRequest(
+                    $session, 'GET', '/me'
+                ))->execute()->getGraphObject(GraphUser::className());
+            } catch(FacebookRequestException $e) {
+                echo "Exception occured, code: " . $e->getCode();
+                echo "with message: " . $e->getMessage();
+            }
+
+            $user = User::create([
+                'oauth' => $token,
+                'name'  => $user_profile->getName(),
+                'email' => $user_profile->getEmail(),
+            ]);
+
+            $request->session()->put('user', $user->id);
+            return redirect('maps.create');
+        }
     }
 
     /**
