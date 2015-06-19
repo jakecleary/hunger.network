@@ -19,7 +19,7 @@ final class User extends Model {
      */
     public function maps()
     {
-        return $this->hasMany('Map');
+        return $this->hasMany('App\Models\Map');
     }
 
 }

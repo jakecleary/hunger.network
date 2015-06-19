@@ -19,7 +19,7 @@ final class Pin extends Model {
      */
     public function map()
     {
-        return $this->belongsTo('Map');
+        return $this->belongsTo('App\Models\Map');
     }
 
 }

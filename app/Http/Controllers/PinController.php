@@ -3,6 +3,8 @@
 use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 
+use App\Models\Map;
+
 /**
  * Represent interactions with the Pin Suggestion system
  */
@@ -18,20 +20,22 @@ class PinController extends BaseController {
     {
         $map = Map::find($uid);
 
-        if($map) {
+        if(!$map) {
             return redirect('login');
         }
-        
-        return view('pins.create');
+
+        return view('pins.create', compact('map'));
     }
 
     /**
      * Save a pins.
+     *
+     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function store()
+    public function store(Request $request)
     {
-        return view('pins.index');
+        dd($request->input());
     }
 
     /**
