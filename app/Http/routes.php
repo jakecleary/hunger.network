@@ -11,18 +11,19 @@
 |
 */
 
-// Login routes
+// Login/logout routes
 $app->get('/', [
-    'as'    => 'show-login',
-    'uses'  => 'UserController@showLogin'
+    'as'    => 'login',
+    'uses'  => 'UserController@login'
 ]);
-$app->post('/login', [
-    'as'    => 'do-login',
-    'uses'  => 'UserController@doLogin'
+
+$app->get('/logout', [
+    'as'    => 'logout',
+    'uses'  => 'UserController@logout'
 ]);
 
 // Dashboard routes
 $app->get('/dashboard', [
-    'as'    => 'show-dashboard',
+    'as'    => 'dashboard',
     'uses'  => 'DashboardController@show'
 ]);

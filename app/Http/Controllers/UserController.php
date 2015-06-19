@@ -3,35 +3,48 @@
 use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 
+use Facebook\FacebookRedirectLoginHelper;
+
 /**
  * Represent interactions with a User
  */
-class UserController extends BaseController {
+class UserController extends Controller {
 
     /**
      * Handle GET to /login
      *
+     * @param  Request $request
      * @return HttpResponse
      */
-    public function showLogin()
+    public function login(Request $request)
     {
-        return view('user.login');
+        $code = $request->input('code');
+        if($code) {
+            // Need to save code
+            dd($code);
+            // $user = User::create('');
+
+            // Create session
+            // $request->session()->put('user', $user->id);
+        }
+
+        $helper = new FacebookRedirectLoginHelper(getenv('APP_URL'));
+        $loginUrl = $helper->getLoginUrl() . 'publish_actions';
+        return view('user.login', compact('loginUrl'));
     }
 
     /**
-     * Handle POST to /login
+     * Handle logging a user out of the app
      *
+     * @param  Request $request
      * @return HttpResponse
      */
-    public function doLogin(Request $request)
+    public function logout(Request $request)
     {
-        $oAuth = $request->input('facebook_oAuth');
-        if(!$oAuth) {
-            return response()->json([
-                'error' => 'Missing Facebook Key'
-            ]);
+        if($request->session()->has('user')) {
+            $request->session()->forget('user');
         }
 
-        return redirect('dashboard');
+        return redirect('login');
     }
 }
