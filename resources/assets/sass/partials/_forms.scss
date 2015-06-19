@@ -1,0 +1,21 @@
+.form {
+
+    &__row {
+        display: block;
+        margin-bottom: 1rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    &__input {
+        background-color: #FFFFFF;
+        color: #444;
+        height: 50px;
+        display: block;
+        padding: 0 1rem;
+        border: none;
+        width: 100%;
+    }
+}
