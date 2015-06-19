@@ -10,10 +10,18 @@ class PinController extends BaseController {
 
     /**
      * View the pins creation page.
+     *
+     * @param $request
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create($uid)
     {
+        $map = Map::find($uid);
+
+        if($map) {
+            return redirect('login');
+        }
+        
         return view('pins.create');
     }
 

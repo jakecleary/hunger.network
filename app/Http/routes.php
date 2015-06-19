@@ -34,7 +34,7 @@ $app->get('/maps/{id}', [
 /*
  * Pins
  */
-$app->get('/pins/create', [
+$app->get('/pins/create/{uid}', [
     'as'    => 'pins.create',
     'uses'  => 'PinController@create'
 ]);
