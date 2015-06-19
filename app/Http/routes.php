@@ -14,8 +14,18 @@ $app->get('/logout', [
     'uses'  => 'UserController@logout'
 ]);
 
-// Dashboard routes
-$app->get('/dashboard', [
-    'as'    => 'dashboard',
-    'uses'  => 'DashboardController@show'
+/*
+ * Maps
+ */
+$app->post('/maps', [
+    'as'   => 'maps.store',
+    'uses' => 'MapController@store'
+]);
+$app->get('/maps/create', [
+    'as'    => 'maps.create',
+    'uses'  => 'MapController@new'
+]);
+$app->get('/maps/{id}', [
+    'as'    => 'maps.show',
+    'uses'  => 'MapController@show'
 ]);
