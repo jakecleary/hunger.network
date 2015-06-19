@@ -11,6 +11,18 @@
 |
 */
 
-$app->get('/', function() use ($app) {
-    return $app->welcome();
-});
+// Login routes
+$app->get('/', [
+    'as'    => 'show-login',
+    'uses'  => 'UserController@showLogin'
+]);
+$app->post('/login', [
+    'as'    => 'do-login',
+    'uses'  => 'UserController@doLogin'
+]);
+
+// Dashboard routes
+$app->get('/dashboard', [
+    'as'    => 'show-dashboard',
+    'uses'  => 'DashboardController@show'
+]);
